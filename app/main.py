@@ -6,7 +6,7 @@ from uuid import uuid4
 from flask import Flask, jsonify, request
 
 class blockchain(object):
-     def __init__(self):
+    def __init__(self):
         self.chain = []
         self.current_transactions = []
 
@@ -14,7 +14,7 @@ class blockchain(object):
         self.new_block(previous_hash=1, proof=100)
 
     def new_block(self, proof, previous_hash=None):
-       """
+        """
         Create a new Block in the Blockchain
         :param proof: <int> The proof given by the Proof of Work algorithm
         :param previous_hash: (Optional) <str> Hash of previous Block
@@ -129,15 +129,15 @@ class blockchain(object):
 
     @app.route('/transactions/new', methods=['POST'])
     def new_transaction():
-    values = request.get_json()
+        values = request.get_json()
 
-    # Check that the required fields are in the POST'ed data
-    required = ['sender', 'recipient', 'amount']
-    if not all(k in values for k in required):
-        return 'Missing values', 400
+        # Check that the required fields are in the POST'ed data
+        required = ['sender', 'recipient', 'amount']
+        if not all(k in values for k in required):
+            return 'Missing values', 400
 
-    # Create a new Transaction
-    index = blockchain.new_transaction(values['sender'], values['recipient'], values['amount'])
+        # Create a new Transaction
+        index = blockchain.new_transaction(values['sender'], values['recipient'], values['amount'])
 
-    response = {'message': f'Transaction will be added to Block {index}'}
-    return jsonify(response), 201
+        response = {'message': f'Transaction will be added to Block {index}'}
+        return jsonify(response), 201
